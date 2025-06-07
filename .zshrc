@@ -77,3 +77,4 @@ eval "$(fzf --zsh)"
 eval "$(zoxide init --cmd cd zsh)"
 
 ### for macos: eval "$(/opt/homebrew/bin/brew shellenv)"
+export PATH=$PATH:/home/yanneck/.spicetify

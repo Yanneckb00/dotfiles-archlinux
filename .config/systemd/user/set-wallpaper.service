@@ -1,0 +1,6 @@
+[Unit]
+Description=Set GNOME wallpaper based on time
+
+[Service]
+Type=oneshot
+ExecStart=%h/.config/scripts/set-wallpaper.sh
