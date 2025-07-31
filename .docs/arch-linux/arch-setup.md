@@ -105,7 +105,7 @@ after that go into chroot:
 ## Oh My ZSH
 - ZSH: `sudo pacmna -S zsh`
 - OMZ: `sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"`
-- 
+- zinit `bash -c "$(curl --fail --show-error --silent --location https://raw.githubusercontent.com/zdharma-continuum/zinit/HEAD/scripts/install.sh)"`
 - Fastfetch: `https://github.com/fastfetch-cli/fastfetch `
 - Config all: `https://github.com/fastfetch-cli/fastfetch/blob/dev/presets/all.jsonc `
 - powerlevel10k:
