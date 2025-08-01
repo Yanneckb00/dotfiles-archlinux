@@ -19,7 +19,7 @@ Further instructions and informations are in the `/.docs` folder inside the repo
 Install the following tools (Linux via pacman or yay):
 
 ```sh
-sudo pacman -S fzf zsh git stow lazygit starship zoxide fastfetch lsd tmux neovim
+sudo pacman -S fzf zsh git stow lazygit starship zoxide fastfetch lsd tmux neovim zinit
 ```
 
 ```sh
