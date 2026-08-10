@@ -1,0 +1,458 @@
+#!/usr/bin/env bash
+
+set -uo pipefail
+
+BACKUP_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/gnome-extensions"
+EXTENSIONS_FILE="$BACKUP_DIR/extensions.txt"
+DCONF_FILE="$BACKUP_DIR/extensions-settings.dconf"
+
+EXTENSIONS_DIR="$HOME/.local/share/gnome-shell/extensions"
+TMP_DIR="$(mktemp -d)"
+
+cleanup() {
+    rm -rf "$TMP_DIR"
+}
+trap cleanup EXIT
+
+die() {
+    echo "ERROR: $*" >&2
+    exit 1
+}
+
+require_command() {
+    command -v "$1" >/dev/null 2>&1 || die "Required command not found: $1"
+}
+
+get_gnome_version() {
+    gnome-shell --version | sed -E 's/[^0-9]*([0-9]+).*/\1/'
+}
+
+get_enabled_extensions() {
+    gnome-extensions list --enabled 2>/dev/null || true
+}
+
+get_installed_extensions() {
+    gnome-extensions list 2>/dev/null || true
+}
+
+validate_uuid() {
+    local uuid="$1"
+
+    [[ "$uuid" =~ ^[^[:space:]]+@[^[:space:]]+$ ]]
+}
+
+download_extension() {
+    local uuid="$1"
+    local shell_version="$2"
+    local output="$3"
+
+    local url
+    url="https://extensions.gnome.org/download-extension/${uuid}.shell-extension.zip?shell_version=${shell_version}"
+
+    echo "  Downloading: $uuid"
+    echo "  GNOME Shell: $shell_version"
+
+    if ! curl \
+        --fail \
+        --silent \
+        --show-error \
+        --location \
+        --retry 3 \
+        --retry-delay 1 \
+        --output "$output" \
+        "$url"; then
+        return 1
+    fi
+
+    # Make sure we actually received a ZIP.
+    if ! unzip -t "$output" >/dev/null 2>&1; then
+        rm -f "$output"
+        return 1
+    fi
+
+    return 0
+}
+
+install_extension() {
+    local uuid="$1"
+    local shell_version="$2"
+
+    local zip_file
+    zip_file="$TMP_DIR/${uuid}.zip"
+
+    echo
+    echo "Processing: $uuid"
+
+    if ! validate_uuid "$uuid"; then
+        echo "  ERROR: Invalid UUID: $uuid"
+        return 1
+    fi
+
+    if ! download_extension "$uuid" "$shell_version" "$zip_file"; then
+        echo "  UNAVAILABLE: No compatible GNOME $shell_version version found."
+        return 1
+    fi
+
+    echo "  Installing..."
+
+    if ! gnome-extensions install --force "$zip_file"; then
+        echo "  ERROR: gnome-extensions install failed."
+        return 1
+    fi
+
+    # gnome-extensions may not see a newly installed extension
+    # until GNOME Shell/session has been restarted.
+    local extension_dir="$HOME/.local/share/gnome-shell/extensions/$uuid"
+
+    if [[ -d "$extension_dir" && -f "$extension_dir/metadata.json" ]]; then
+        echo "  OK: Extension installed."
+        echo "  Location: $extension_dir"
+        return 0
+    fi
+
+    echo "  ERROR: Installation command succeeded, but extension directory was not found:"
+    echo "    $extension_dir"
+    return 1
+}
+
+cmd_export() {
+    require_command gnome-extensions
+    require_command dconf
+
+    mkdir -p "$BACKUP_DIR"
+
+    local tmp_extensions
+    tmp_extensions="$(mktemp)"
+
+    echo "Exporting enabled GNOME extensions..."
+
+    if ! gnome-extensions list --enabled > "$tmp_extensions" 2>/dev/null; then
+        rm -f "$tmp_extensions"
+        die "Could not query enabled GNOME extensions."
+    fi
+
+    # NEVER overwrite the backup with an empty list.
+    if [[ ! -s "$tmp_extensions" ]]; then
+        rm -f "$tmp_extensions"
+        echo "ERROR: gnome-extensions returned an empty list."
+        echo "ERROR: The existing extensions.txt was NOT modified."
+        return 1
+    fi
+
+    sort -u "$tmp_extensions" > "${tmp_extensions}.sorted"
+
+    mv "${tmp_extensions}.sorted" "$EXTENSIONS_FILE"
+    rm -f "$tmp_extensions"
+
+    echo "Saved enabled extensions to:"
+    echo "  $EXTENSIONS_FILE"
+
+    echo
+    echo "Exporting GNOME extension settings..."
+
+    if dconf dump /org/gnome/shell/extensions/ > "$DCONF_FILE"; then
+        echo "Saved settings to:"
+        echo "  $DCONF_FILE"
+    else
+        echo "WARNING: Could not export dconf settings."
+        return 1
+    fi
+
+    echo
+    echo "Export completed successfully."
+}
+
+cmd_install() {
+    require_command gnome-shell
+    require_command gnome-extensions
+    require_command curl
+    require_command unzip
+
+    [[ -f "$EXTENSIONS_FILE" ]] ||
+        die "No extensions.txt found at $EXTENSIONS_FILE"
+
+    local shell_version
+    shell_version="$(get_gnome_version)"
+
+    [[ -n "$shell_version" ]] ||
+        die "Could not determine GNOME Shell version."
+
+    echo "Installing GNOME extensions for GNOME $shell_version..."
+
+    local total=0
+    local installed=0
+    local failed=0
+
+    while IFS= read -r uuid || [[ -n "$uuid" ]]; do
+        # Skip empty lines and comments.
+        [[ -z "$uuid" ]] && continue
+        [[ "$uuid" == \#* ]] && continue
+
+        ((total++))
+
+        if install_extension "$uuid" "$shell_version"; then
+            ((installed++))
+        else
+            ((failed++))
+        fi
+    done < "$EXTENSIONS_FILE"
+
+    echo
+    echo "============================================================"
+    echo "Installation finished"
+    echo "============================================================"
+    echo "Total:     $total"
+    echo "Installed: $installed"
+    echo "Failed:    $failed"
+
+    if (( failed > 0 )); then
+        echo
+        echo "WARNING: Some extensions could not be installed."
+        return 1
+    fi
+}
+
+cmd_restore() {
+    require_command gnome-shell
+    require_command gnome-extensions
+    require_command dconf
+
+    echo "GNOME Extensions Restore"
+    echo
+
+    echo "Step 1/3: Installing missing extensions..."
+
+    if ! cmd_install; then
+        echo
+        echo "WARNING: Some extensions could not be installed."
+    fi
+
+    echo
+    echo "Step 2/3: Enabling extensions..."
+
+    local failed=0
+
+    while IFS= read -r uuid || [[ -n "$uuid" ]]; do
+        [[ -z "$uuid" ]] && continue
+        [[ "$uuid" == \#* ]] && continue
+
+        if gnome-extensions list 2>/dev/null | grep -Fxq "$uuid"; then
+            echo "  Enabling: $uuid"
+
+            if gnome-extensions enable "$uuid" 2>/dev/null; then
+                echo "    OK"
+            else
+                echo "    WARNING: Could not enable."
+                ((failed++))
+            fi
+        else
+            echo "  SKIP: $uuid is not installed."
+            ((failed++))
+        fi
+    done < "$EXTENSIONS_FILE"
+
+    echo
+    echo "Step 3/3: Restoring dconf settings..."
+
+    if [[ -f "$DCONF_FILE" ]]; then
+        if dconf load /org/gnome/shell/extensions/ < "$DCONF_FILE"; then
+            echo "  OK: dconf settings restored."
+        else
+            echo "  WARNING: Failed to restore dconf settings."
+            ((failed++))
+        fi
+    else
+        echo "  WARNING: $DCONF_FILE does not exist."
+    fi
+
+    echo
+    if (( failed > 0 )); then
+        echo "Restore completed with warnings/errors."
+        echo "Run:"
+        echo "  gnome-extensions-manager status"
+        echo "to inspect the current state."
+        return 1
+    fi
+
+    echo "Restore completed successfully."
+}
+
+cmd_status() {
+    require_command gnome-extensions
+    require_command gnome-shell
+
+    echo "GNOME Shell: $(gnome-shell --version | sed 's/^GNOME Shell //')"
+    echo
+
+    echo "Installed GNOME extensions:"
+
+    local installed
+    installed="$(get_installed_extensions)"
+
+    if [[ -n "$installed" ]]; then
+        echo "$installed"
+    else
+        echo "None"
+    fi
+
+    echo
+    echo "Enabled GNOME extensions:"
+
+    local enabled
+    enabled="$(get_enabled_extensions)"
+
+    if [[ -n "$enabled" ]]; then
+        echo "$enabled"
+    else
+        echo "None"
+    fi
+}
+
+cmd_diff() {
+    require_command gnome-extensions
+
+    [[ -f "$EXTENSIONS_FILE" ]] ||
+        die "No extensions.txt found at $EXTENSIONS_FILE"
+
+    local tmp_backup
+    local tmp_current
+
+    tmp_backup="$(mktemp)"
+    tmp_current="$(mktemp)"
+
+    sort -u "$EXTENSIONS_FILE" > "$tmp_backup"
+    get_enabled_extensions | sort -u > "$tmp_current"
+
+    echo "Backup:"
+    cat "$tmp_backup"
+
+    echo
+    echo "Currently enabled:"
+    cat "$tmp_current"
+
+    echo
+    echo "Diff:"
+    diff -u "$tmp_backup" "$tmp_current" || true
+
+    rm -f "$tmp_backup" "$tmp_current"
+}
+
+cmd_update() {
+    require_command gnome-shell
+    require_command gnome-extensions
+    require_command curl
+    require_command unzip
+
+    local shell_version
+    shell_version="$(get_gnome_version)"
+
+    echo "Checking GNOME extensions for updates..."
+    echo "GNOME Shell: $shell_version"
+    echo
+
+    [[ -f "$EXTENSIONS_FILE" ]] ||
+        die "No extensions.txt found."
+
+    while IFS= read -r uuid || [[ -n "$uuid" ]]; do
+        [[ -z "$uuid" ]] && continue
+        [[ "$uuid" == \#* ]] && continue
+
+        local zip_file
+        zip_file="$TMP_DIR/update-${uuid}.zip"
+
+        echo "Checking: $uuid"
+
+        if download_extension "$uuid" "$shell_version" "$zip_file"; then
+            echo "  Compatible version available."
+            echo "  Use install to download/install the latest version."
+        else
+            echo "  No compatible GNOME $shell_version version available."
+        fi
+
+        echo
+    done < "$EXTENSIONS_FILE"
+}
+
+cmd_help() {
+    cat <<EOF
+GNOME Extensions Manager
+
+Usage:
+  gnome-extensions-manager COMMAND
+
+Commands:
+  export
+      Export currently enabled GNOME extensions
+      and their dconf settings.
+
+  install
+      Install all extensions from extensions.txt.
+      Extensions are downloaded from extensions.gnome.org.
+
+  restore
+      Install missing extensions, enable them and
+      restore extensions-settings.dconf.
+
+  status
+      Show installed and enabled extensions.
+
+  diff
+      Compare enabled extensions with extensions.txt.
+
+  update
+      Check which extensions have a compatible version
+      for the current GNOME Shell version.
+
+  help
+      Show this help.
+
+Examples:
+  gnome-extensions-manager install
+  gnome-extensions-manager restore
+  gnome-extensions-manager export
+  gnome-extensions-manager status
+  gnome-extensions-manager diff
+  gnome-extensions-manager update
+
+Backup directory:
+  $BACKUP_DIR
+EOF
+}
+
+main() {
+    mkdir -p "$BACKUP_DIR"
+
+    local command="${1:-help}"
+
+    case "$command" in
+        export)
+            cmd_export
+            ;;
+        install)
+            cmd_install
+            ;;
+        restore)
+            cmd_restore
+            ;;
+        status)
+            cmd_status
+            ;;
+        diff)
+            cmd_diff
+            ;;
+        update)
+            cmd_update
+            ;;
+        help|-h|--help)
+            cmd_help
+            ;;
+        *)
+            echo "ERROR: Unknown command: $command"
+            echo
+            cmd_help
+            return 1
+            ;;
+    esac
+}
+
+main "$@"
