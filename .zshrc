@@ -32,17 +32,19 @@ zinit cdreplay -q
 ### fastfetch
 fastfetch
 
-### clear + fastfetch alias
-function cl() {
-  command clear
-  fastfetch
-}
+### functions
+if [ -f ~/.config/zsh/functions.zsh ]; then
+    source ~/.config/zsh/functions.zsh
+else
+    print "404: ~/.config/zsh/functions.zsh not found."
+fi
 
 ### Aliases
-alias ..='cd ..'
-alias ...='cd ../..'
-alias lg='lazygit'
-alias ls='ls --color'
+if [ -f ~/.config/zsh/aliases.zsh ]; then
+    source ~/.config/zsh/aliases.zsh
+else
+    print "404: ~/.config/zsh/aliases.zsh not found."
+fi
 
 ### Keybindings (^ = ctrl)
 bindkey -e
@@ -78,3 +80,9 @@ eval "$(zoxide init --cmd cd zsh)"
 
 ### for macos: eval "$(/opt/homebrew/bin/brew shellenv)"
 export PATH=$PATH:/home/yanneck/.spicetify
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Created by `pipx` on 2026-08-10 10:16:27
+export PATH="$PATH:/home/yanneck/.local/bin"

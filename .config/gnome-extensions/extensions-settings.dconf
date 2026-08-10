@@ -1,0 +1,436 @@
+[arcmenu]
+force-menu-location='MonitorCentered'
+menu-button-appearance='Icon'
+menu-layout='Pop'
+override-menu-theme=false
+pop-folders-data={'Library Home': 'Eigene Bibliothek', 'System': 'System', 'Utilities': 'Dienstprogramme'}
+prefs-visible-page=0
+recently-installed-apps=['org.openrgb.OpenRGB.desktop', 'org.rncbc.qjackctl.desktop', 'SuperColliderIDE.desktop', 'com.jeffser.Alpaca.desktop', 'winetricks.desktop', 'org.gnome.Yelp.desktop', 'org.kde.showfoto.desktop', 'com.lunarclient.LunarClient.desktop', 'terminator.desktop', 'xterm.desktop', 'uxterm.desktop', 'termius.desktop', 'org.mozilla.thunderbird_esr.desktop', 'wine-Programs-Ableton Live 12 Suite.desktop']
+search-entry-border-radius=(true, 25)
+update-notifier-project-version=73
+
+[blur-my-shell]
+rounded-blur-found=false
+settings-version=2
+
+[blur-my-shell/appfolder]
+brightness=0.59999999999999998
+sigma=30
+
+[blur-my-shell/applications]
+blur=true
+brightness=1.0
+dynamic-opacity=false
+opacity=185
+sigma=30
+whitelist=['kitty']
+
+[blur-my-shell/coverflow-alt-tab]
+pipeline='pipeline_default'
+
+[blur-my-shell/dash-to-dock]
+blur=true
+brightness=0.59999999999999998
+pipeline='pipeline_default_rounded'
+sigma=30
+static-blur=true
+style-dash-to-dock=0
+
+[blur-my-shell/hidetopbar]
+compatibility=false
+
+[blur-my-shell/lockscreen]
+pipeline='pipeline_default'
+
+[blur-my-shell/overview]
+pipeline='pipeline_default'
+
+[blur-my-shell/panel]
+blur=true
+brightness=0.80000000000000004
+force-light-text=false
+override-background=true
+pipeline='pipeline_default'
+sigma=100
+static-blur=false
+
+[blur-my-shell/screenshot]
+pipeline='pipeline_default'
+
+[blur-my-shell/window-list]
+brightness=0.59999999999999998
+sigma=30
+
+[burn-my-windows]
+last-extension-version=46
+
+[caffeine]
+cli-toggle=false
+enable-mpris=true
+indicator-position-max=2
+user-enabled=true
+
+[com/github/hermes83/compiz-windows-effect]
+friction=3.2000000000000002
+last-version=31
+mass=61.0
+speedup-factor-divider=7.5
+spring-k=8.0999999999999996
+
+[custom-hot-corners-extended/misc]
+show-osd-monitor-indexes=false
+supported-active-extensions=@as []
+
+[dash-to-dock]
+always-center-icons=true
+apply-custom-theme=true
+background-opacity=0.80000000000000004
+custom-theme-shrink=false
+dash-max-icon-size=64
+dock-fixed=false
+dock-position='BOTTOM'
+extend-height=false
+height-fraction=0.90000000000000002
+icon-size-fixed=false
+intellihide-mode='FOCUS_APPLICATION_WINDOWS'
+multi-monitor=true
+preferred-monitor=-2
+preferred-monitor-by-connector='HDMI-1'
+preview-size-scale=0.0
+
+[dash-to-panel]
+animate-appicon-hover=false
+animate-appicon-hover-animation-extent={'RIPPLE': 4, 'PLANK': 4, 'SIMPLE': 1}
+appicon-margin=4
+appicon-style='NORMAL'
+dot-position='BOTTOM'
+dot-style-focused='METRO'
+extension-version=73
+global-border-radius=0
+highlight-appicon-hover=true
+hotkeys-overlay-combo='TEMPORARILY'
+panel-anchors='{"SAM-HTPKC06029":"MIDDLE"}'
+panel-element-positions='{}'
+panel-lengths='{}'
+panel-positions='{"SAM-HTPKC06029":"BOTTOM"}'
+panel-sizes='{"SAM-HTPKC06029":48}'
+prefs-opened=false
+show-favorites-all-monitors=true
+stockgs-keep-top-panel=false
+trans-use-border=false
+trans-use-custom-bg=false
+trans-use-custom-gradient=false
+trans-use-custom-opacity=true
+trans-use-dynamic-opacity=false
+window-preview-title-position='TOP'
+
+[forge]
+css-last-update=uint32 37
+
+[gsconnect]
+name='archlinux'
+
+[just-perfection]
+max-displayed-search-results=0
+panel-in-overview=true
+support-notifier-showed-version=34
+support-notifier-type=0
+
+[mediacontrols]
+show-control-icons-next=true
+show-control-icons-previous=true
+show-control-icons-seek-backward=false
+show-control-icons-seek-forward=false
+
+[openbar]
+accent-color=['0', '0.75', '0.75']
+accent-override=false
+apply-accent-shell=true
+apply-all-shell=true
+apply-flatpak=false
+apply-gtk=false
+apply-menu-notif=true
+apply-menu-shell=true
+auto-bgalpha=true
+autofg-bar=true
+autofg-menu=true
+autohg-bar=true
+autohg-menu=true
+autotheme-dark='Color'
+autotheme-font=true
+autotheme-light='Color'
+autotheme-refresh=true
+balpha=0.0
+bartype='Floating'
+bcolor=['0.631', '0.580', '0.557']
+bg-change=false
+bgalpha=0.90000000000000002
+bgalpha-wmax=1.0
+bgalpha2=0.69999999999999996
+bgcolor=['0.286', '0.267', '0.216']
+bgcolor-wmax=['0.118', '0.118', '0.118']
+bgcolor2=['0.263', '0.333', '0.384']
+bgpalette=true
+bguri='file:///home/yanneck/.config/background'
+border-wmax=false
+bordertype='solid'
+bottom-margin=0.0
+boxalpha=0.0
+boxcolor=['0.286', '0.267', '0.216']
+bradius=0.0
+buttonbg-wmax=true
+bwidth=0.0
+candy1=['0', '0.61', '0.74']
+candy10=['0.09', '0.19', '0.72']
+candy11=['0.75', '0.49', '0.44']
+candy12=['1', '0.92', '0.12']
+candy13=['0.38', '0.63', '0.92']
+candy14=['0.37', '0.36', '0.39']
+candy15=['0.40', '0.23', '0.72']
+candy16=['1', '0.32', '0.32']
+candy2=['1', '0.41', '0.41']
+candy3=['0.63', '0.16', '0.8']
+candy4=['0.94', '0.60', '0.23']
+candy5=['0.03', '0.41', '0.62']
+candy6=['0.56', '0.18', '0.43']
+candy7=['0.95', '0.12', '0.67']
+candy8=['0.18', '0.76', '0.49']
+candy9=['0.93', '0.20', '0.23']
+candyalpha=0.81999999999999995
+candybar=false
+card-hint=10
+color-scheme='prefer-dark'
+corner-radius=false
+count1=284404
+count10=6892
+count11=1238
+count12=20
+count2=103162
+count3=88962
+count4=58411
+count5=40508
+count6=28371
+count7=23731
+count8=21158
+count9=10143
+cust-margin-wmax=false
+dark-accent-color=['0', '0.75', '0.75']
+dark-bcolor=['0.631', '0.580', '0.557']
+dark-bgcolor=['0.286', '0.267', '0.216']
+dark-bgcolor-wmax=['0.118', '0.118', '0.118']
+dark-bgcolor2=['0.263', '0.333', '0.384']
+dark-bguri='file:///home/yanneck/.config/background'
+dark-boxcolor=['0.286', '0.267', '0.216']
+dark-candy1=['0', '0.61', '0.74']
+dark-candy10=['0.09', '0.19', '0.72']
+dark-candy11=['0.75', '0.49', '0.44']
+dark-candy12=['1', '0.92', '0.12']
+dark-candy13=['0.38', '0.63', '0.92']
+dark-candy14=['0.37', '0.36', '0.39']
+dark-candy15=['0.40', '0.23', '0.72']
+dark-candy16=['1', '0.32', '0.32']
+dark-candy2=['1', '0.41', '0.41']
+dark-candy3=['0.63', '0.16', '0.8']
+dark-candy4=['0.94', '0.60', '0.23']
+dark-candy5=['0.03', '0.41', '0.62']
+dark-candy6=['0.56', '0.18', '0.43']
+dark-candy7=['0.95', '0.12', '0.67']
+dark-candy8=['0.18', '0.76', '0.49']
+dark-candy9=['0.93', '0.20', '0.23']
+dark-dbgcolor=['0.125', '0.125', '0.125']
+dark-fgcolor=['0.984', '0.945', '0.780']
+dark-hcolor=['0.812', '0.463', '0.208']
+dark-hscd-color=['0.851', '0.663', '0.533']
+dark-iscolor=['0.286', '0.267', '0.216']
+dark-mbcolor=['0.812', '0.463', '0.208']
+dark-mbgcolor=['0.149', '0.153', '0.141']
+dark-mfgcolor=['1.0', '1.0', '1.0']
+dark-mhcolor=['0.812', '0.463', '0.208']
+dark-mscolor=['0.851', '0.663', '0.533']
+dark-mshcolor=['0.000', '0.000', '0.000']
+dark-palette1=['38', '39', '36']
+dark-palette10=['161', '148', '142']
+dark-palette11=['184', '112', '69']
+dark-palette12=['174', '84', '43']
+dark-palette2=['217', '169', '136']
+dark-palette3=['136', '110', '91']
+dark-palette4=['92', '77', '59']
+dark-palette5=['207', '118', '53']
+dark-palette6=['67', '85', '98']
+dark-palette7=['100', '110', '120']
+dark-palette8=['73', '68', '55']
+dark-palette9=['87', '100', '107']
+dark-shcolor=['0.000', '0.000', '0.000']
+dark-smbgcolor=['0.263', '0.333', '0.384']
+dark-vw-color=['0.851', '0.663', '0.533']
+dark-winbcolor=['0.851', '0.663', '0.533']
+dashdock-style='Default'
+dbgalpha=0.76000000000000001
+dbgcolor=['0.125', '0.125', '0.125']
+dborder=true
+dbradius=100.0
+default-font='Sans 12'
+destruct-color=['0.75', '0.11', '0.16']
+disize=48.0
+dshadow=true
+fgalpha=1.0
+fgcolor=['0.984', '0.945', '0.780']
+fitts-widgets=true
+font='Outfit 12'
+gradient=false
+gradient-direction='vertical'
+gtk-popover=false
+gtk-shadow='Default'
+gtk-transparency=1.0
+halpha=0.14000000000000001
+handle-border=3.0
+hbar-gtk3only=false
+hcolor=['0.812', '0.463', '0.208']
+headerbar-hint=0
+heffect=false
+height=46.0
+hpad=0.0
+hscd-color=['0.851', '0.663', '0.533']
+import-export=false
+isalpha=0.94999999999999996
+iscolor=['0.286', '0.267', '0.216']
+light-accent-color=['0', '0.75', '0.75']
+light-bcolor=['0.812', '0.463', '0.208']
+light-bgcolor=['0.286', '0.267', '0.216']
+light-bgcolor-wmax=['0.922', '0.922', '0.922']
+light-bgcolor2=['0.263', '0.333', '0.384']
+light-bguri='file:///home/yanneck/.config/background'
+light-boxcolor=['0.286', '0.267', '0.216']
+light-candy1=['0', '0.61', '0.74']
+light-candy10=['0.09', '0.19', '0.72']
+light-candy11=['0.75', '0.49', '0.44']
+light-candy12=['1', '0.92', '0.12']
+light-candy13=['0.38', '0.63', '0.92']
+light-candy14=['0.37', '0.36', '0.39']
+light-candy15=['0.40', '0.23', '0.72']
+light-candy16=['1', '0.32', '0.32']
+light-candy2=['1', '0.41', '0.41']
+light-candy3=['0.63', '0.16', '0.8']
+light-candy4=['0.94', '0.60', '0.23']
+light-candy5=['0.03', '0.41', '0.62']
+light-candy6=['0.56', '0.18', '0.43']
+light-candy7=['0.95', '0.12', '0.67']
+light-candy8=['0.18', '0.76', '0.49']
+light-candy9=['0.93', '0.20', '0.23']
+light-dbgcolor=['0.125', '0.125', '0.125']
+light-fgcolor=['1.0', '1.0', '1.0']
+light-hcolor=['0.361', '0.302', '0.231']
+light-hscd-color=['0.851', '0.663', '0.533']
+light-iscolor=['0.286', '0.267', '0.216']
+light-mbcolor=['0.361', '0.302', '0.231']
+light-mbgcolor=['0.149', '0.153', '0.141']
+light-mfgcolor=['1.0', '1.0', '1.0']
+light-mhcolor=['0.361', '0.302', '0.231']
+light-mscolor=['0.851', '0.663', '0.533']
+light-mshcolor=['0.000', '0.000', '0.000']
+light-palette1=['38', '39', '36']
+light-palette10=['161', '148', '142']
+light-palette11=['184', '112', '69']
+light-palette12=['174', '84', '43']
+light-palette2=['217', '169', '136']
+light-palette3=['136', '110', '91']
+light-palette4=['92', '77', '59']
+light-palette5=['207', '118', '53']
+light-palette6=['67', '85', '98']
+light-palette7=['100', '110', '120']
+light-palette8=['73', '68', '55']
+light-palette9=['87', '100', '107']
+light-shcolor=['0.000', '0.000', '0.000']
+light-smbgcolor=['0.263', '0.333', '0.384']
+light-vw-color=['0.851', '0.663', '0.533']
+light-winbcolor=['0.851', '0.663', '0.533']
+margin=0.0
+margin-wmax=1.0
+mbalpha=0.0
+mbcolor=['0.812', '0.463', '0.208']
+mbg-gradient=false
+mbgalpha=0.90000000000000002
+mbgcolor=['0.149', '0.153', '0.141']
+menu-radius=21.0
+menustyle=true
+mfgalpha=1.0
+mfgcolor=['1.0', '1.0', '1.0']
+mhalpha=0.29999999999999999
+mhcolor=['0.812', '0.463', '0.208']
+monitor-height=1728
+monitor-width=3072
+monitors='all'
+msalpha=0.84999999999999998
+mscolor=['0.851', '0.663', '0.533']
+mshalpha=0.16
+mshcolor=['0.000', '0.000', '0.000']
+neon=false
+neon-wmax=false
+notif-radius=10.0
+palette1=['38', '39', '36']
+palette10=['161', '148', '142']
+palette11=['184', '112', '69']
+palette12=['174', '84', '43']
+palette2=['217', '169', '136']
+palette3=['136', '110', '91']
+palette4=['92', '77', '59']
+palette5=['207', '118', '53']
+palette6=['67', '85', '98']
+palette7=['100', '110', '120']
+palette8=['73', '68', '55']
+palette9=['87', '100', '107']
+pause-reload=false
+position='Top'
+prominent1=['100', '100', '100']
+prominent2=['100', '100', '100']
+prominent3=['100', '100', '100']
+prominent4=['100', '100', '100']
+prominent5=['100', '100', '100']
+prominent6=['100', '100', '100']
+qtoggle-radius=50.0
+radius-bottomleft=true
+radius-bottomright=true
+radius-topleft=true
+radius-topright=true
+reloadstyle=true
+removestyle=false
+sbar-gradient='none'
+set-bottom-margin=true
+set-fullscreen=true
+set-notif-position=true
+set-notifications=false
+set-overview=false
+set-yarutheme=false
+shadow=false
+shalpha=0.19
+shcolor=['0.000', '0.000', '0.000']
+sidebar-hint=10
+slider-height=4.0
+smbgalpha=0.94999999999999996
+smbgcolor=['0.263', '0.333', '0.384']
+smbgoverride=false
+success-color=['0.15', '0.635', '0.41']
+traffic-light=false
+trigger-autotheme=false
+trigger-reload=false
+view-hint=0
+vpad=0.0
+vw-color=['0.851', '0.663', '0.533']
+warning-color=['0.96', '0.83', '0.17']
+width-bottom=true
+width-left=true
+width-right=true
+width-top=true
+winbalpha=0.75
+winbcolor=['0.851', '0.663', '0.533']
+winbradius=15.0
+winbwidth=0.0
+window-hint=0
+wmax-hbarhint=false
+wmaxbar=false
+
+[system-monitor]
+show-swap=true
+
+[user-theme]
+name=''

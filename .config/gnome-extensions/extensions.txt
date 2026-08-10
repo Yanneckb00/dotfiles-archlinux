@@ -1,0 +1,17 @@
+custom-hot-corners-extended@G-dH.github.com
+clipboard-indicator@tudmotu.com
+burn-my-windows@schneegans.github.com
+blur-my-shell@aunetx
+caffeine@patapon.info
+compiz-windows-effect@hermes83.github.com
+just-perfection-desktop@just-perfection
+arcmenu@arcmenu.com
+dash-to-panel@jderose9.github.com
+auto-move-windows@gnome-shell-extensions.gcampax.github.com
+places-menu@gnome-shell-extensions.gcampax.github.com
+apps-menu@gnome-shell-extensions.gcampax.github.com
+user-theme@gnome-shell-extensions.gcampax.github.com
+extension-list@tu.berry
+Vitals@CoreCoding.com
+wack-lockscreen-clock@rinzler69-wastaken.github.com
+tweaks-system-menu@extensions.gnome-shell.fifi.org
